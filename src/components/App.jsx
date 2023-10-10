@@ -5,12 +5,18 @@
 import { Route, Routes } from 'react-router-dom';
 
 import Layout from './Layout/Layout';
-import Home from 'pages/HomePage';
+// import Home from 'pages/HomePage';
 
-import Login from 'pages/Login';
+// import Login from 'pages/Login';
 
-import Contacts from 'pages/Contacts';
-import Register from 'pages/Register';
+// import Contacts from 'pages/Contacts';
+// import Register from 'pages/Register';
+import { lazy } from 'react';
+
+const Home = lazy(() => import('../pages/HomePage'));
+const Register = lazy(() => import('../pages/Register'));
+const Login = lazy(() => import('../pages/Login'));
+const Contacts = lazy(() => import('../pages/Contacts'));
 
 export const App = () => {
   return (

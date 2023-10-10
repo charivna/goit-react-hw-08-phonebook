@@ -1,3 +1,5 @@
+import { Form, Label } from './LoginForm.styled';
+
 export const LoginForm = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -5,17 +7,17 @@ export const LoginForm = () => {
     // const form = evt.target;
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <Form onSubmit={handleSubmit}>
+      <Label>
         Email
         <input type="email" name="email" />
-      </label>
+      </Label>
 
-      <label>
+      <Label>
         Password
         <input type="password" name="password" />
-      </label>
+      </Label>
       <button type="submit"> Log In</button>
-    </form>
+    </Form>
   );
 };

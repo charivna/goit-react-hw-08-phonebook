@@ -1,7 +1,7 @@
 export const RegisterForm = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
-    const form = evt.target;
+    // const form = evt.target;
   };
   return (
     <form onSubmit={handleSubmit}>

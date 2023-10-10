@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { ButtonAdd, Form, Input, Label } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { createContactsThunk } from 'redux/thunks';
 import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/api';
 
 export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
@@ -35,7 +34,7 @@ export const ContactForm = () => {
       return contacts;
     }
     dispatch(
-      createContactsThunk({
+      addContact({
         name,
         number,
       })

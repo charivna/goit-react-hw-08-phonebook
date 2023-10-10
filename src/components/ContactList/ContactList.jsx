@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Contact } from './Contact';
 import { List } from './ContactList.styled';
 import { useEffect } from 'react';
-import { deleteContactsThunk, getContactsThunk } from 'redux/thunks';
 import { selectStatusFilter } from 'redux/selectors';
+import { deleteContact, fetchContacts } from 'redux/api';
 
 export const ContactList = () => {
   const { items, error, isLoading } = useSelector(state => state.contacts);
@@ -17,7 +17,7 @@ export const ContactList = () => {
   );
 
   useEffect(() => {
-    dispatch(getContactsThunk());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   return (
@@ -30,7 +30,7 @@ export const ContactList = () => {
               key={id}
               name={name}
               number={number}
-              onClick={() => dispatch(deleteContactsThunk(id))}
+              onClick={() => dispatch(deleteContact(id))}
             />
           ))}
         </List>

@@ -1,5 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import { logIn, logOut, refreshUser, register } from './operations';
+import {
+  handleAuthFulfilled,
+  handleAuthPending,
+  handleAuthRejected,
+} from './handlers';
 
 const initialState = {
   user: { name: null, email: null },
@@ -14,34 +19,13 @@ const authSlice = createSlice({
   initialState,
   extraReducers: builder =>
     builder
-      .addCase(register.pending, state => state)
-      .addCase(register.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.isLoggedIn = true;
-      })
-      .addCase(
-        register.rejected,
-        (state, { payload }) => (state.error = payload)
-      )
-      .addCase(logIn.pending, (state, action) => {})
-      .addCase(logIn.fulfilled, (state, { payload }) => {
-        state.user = payload.user;
-        state.token = payload.token;
-        state.isLoggedIn = true;
-      })
-      .addCase(logIn.rejected, (state, { payload }) => {
-        state.error = payload;
-      })
-      .addCase(logOut.pending, (state, action) => state)
+
       .addCase(logOut.fulfilled, state => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
       })
-      .addCase(logOut.rejected, (state, { payload }) => {
-        state.error = payload;
-      })
+
       .addCase(refreshUser.pending, state => {
         state.isRefreshing = true;
       })
@@ -53,7 +37,19 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, (state, { payload }) => {
         state.isRefreshing = false;
         state.error = payload;
-      }),
+      })
+      .addMatcher(
+        isAnyOf(register.pending, logIn.pending, logOut.pending),
+        handleAuthPending
+      )
+      .addMatcher(
+        isAnyOf(register.fulfilled, logIn.fulfilled),
+        handleAuthFulfilled
+      )
+      .addMatcher(
+        isAnyOf(register.rejected, logIn.rejected, logOut.rejected),
+        handleAuthRejected
+      ),
 });
 
 export const authReducer = authSlice.reducer;

@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Contact } from './Contact';
 import { List } from './ContactList.styled';
 import { useEffect } from 'react';
-import { selectStatusFilter } from 'redux/selectors';
-import { deleteContact, fetchContacts } from 'redux/api';
+import { selectStatusFilter } from 'redux/contacts/selectors';
+import { deleteContact, fetchContacts } from 'redux/contacts/api';
 
 export const ContactList = () => {
   const { items, error, isLoading } = useSelector(state => state.contacts);
